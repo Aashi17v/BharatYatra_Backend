@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 
 // ✅ Middleware
-app.use(cors());
+app.use(cors({ origin: "*" })); // improved CORS (safe for deployment)
 app.use(express.json());
 
 // ✅ Existing Routes
@@ -30,6 +30,11 @@ app.use("/api/booking", bookingRoutes);
 
 // ✅ ADD THIS 👇 (NEW)
 app.use("/api", emailRoutes);
+
+// ✅ Test Route (added, nothing removed)
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
 
 // ✅ DB Connection
 mongoose.connect(process.env.MONGO_URI)
